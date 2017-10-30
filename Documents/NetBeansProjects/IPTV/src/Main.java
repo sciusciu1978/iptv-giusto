@@ -18,7 +18,7 @@ public class Main {
         
         iptv.debitoPagare("FiglioDavide",10);
         iptv.stampaDebiti();
-        iptv.debitoSaldare("FiglioDavide",5);
+        iptv.debitoSaldare("FiglioDavide",5); 
         iptv.stampaDebiti();
     }
     

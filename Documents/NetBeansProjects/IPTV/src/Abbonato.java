@@ -1,5 +1,5 @@
 
-public class Abbonato {
+public class Abbonato { 
     double prezzoMensile;
     String numeroTelefono;
     String username;

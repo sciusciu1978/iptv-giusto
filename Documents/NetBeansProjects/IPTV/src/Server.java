@@ -1,4 +1,4 @@
-
+ 
 public class Server {
     private String nomeServer;
     private String contattoSocial;

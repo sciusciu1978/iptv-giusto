@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GestioneIptv {
+public class GestioneIptv { 
     ArrayList<Abbonato> abbonati= new ArrayList<Abbonato>();
     ArrayList<Abbonato> abbonatiRimossi= new ArrayList<Abbonato>();
   

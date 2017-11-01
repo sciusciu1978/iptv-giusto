@@ -2,10 +2,19 @@
 public class Server {
     private String nomeServer;
     private String contattoSocial;
+    private int numeroAbbServer;
 
     public Server(String nomeServer, String contattoSocial) {
         this.nomeServer = nomeServer;
         this.contattoSocial = contattoSocial;
+    }
+
+    public int getNumeroAbbServer() {
+        return numeroAbbServer;
+    }
+
+    public void setNumeroAbbServer(int numeroAbbServer) {
+        this.numeroAbbServer = numeroAbbServer;
     }
     
 
@@ -25,6 +34,6 @@ public class Server {
         this.contattoSocial = contattoSocial;
     }
     public String toString(){
-        return nomeServer+'\n'+"Contatto Social: "+contattoSocial;
+        return nomeServer+'\n'+"Contatto Social: "+contattoSocial+" - Numero abbonati "+numeroAbbServer;
     } 
 }

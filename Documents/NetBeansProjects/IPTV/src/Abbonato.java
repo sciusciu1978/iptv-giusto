@@ -5,6 +5,7 @@ public class Abbonato {
     String username;
     String annotazioni;
     double debitoCorrente;
+    Server server;
 
     public Abbonato(Server server,double prezzoMensile, String numeroTelefono, String username, String annotazioni,double debitoCorrente) {
         this.prezzoMensile = prezzoMensile;
@@ -12,6 +13,13 @@ public class Abbonato {
         this.username = username;
         this.annotazioni = annotazioni;
         this.debitoCorrente=debitoCorrente;
+        this.server=server;
+    }
+public Server getServer(){
+    return server;
+}
+public double getDebitoCorrente() {
+        return debitoCorrente;
     }
 
     public void setDebitoCorrente(double debitoCorrente) {

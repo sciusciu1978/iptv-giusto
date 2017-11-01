@@ -25,6 +25,8 @@ public class GestioneIptv {
             
               //prezzi.put(abbonato2,new Double(prezzoMensile));
                debitiCorrenti.put(abbonato2,new Double(deditoCorrente)); 
+               int numeroAbbserver=server.getNumeroAbbServer();//aumenta il numero abbonati del server
+               server.setNumeroAbbServer(numeroAbbserver+1);
         }
         else{
             System.out.println("Username gia' registrato");
@@ -32,16 +34,20 @@ public class GestioneIptv {
     }
     
     public void rimuoviabbonato(String username){
+        Abbonato abbonato1=null;
         for (Abbonato abbonato : abbonati) {
             if (abbonato.getUsername().equalsIgnoreCase(username)) {
-                Abbonato rimosso= abbonato;
-                abbonati.remove(abbonato);
-                
-                abbonatiRimossi.add(rimosso);
+                abbonato1=abbonato;
             }
-               else{
-                System.out.println("Abbonato non trovato!");
-               }
+        }
+        if(abbonato1!=null){
+           abbonati.remove(abbonato1);
+                abbonatiRimossi.add(abbonato1);
+                int numeroAbbserver=abbonato1.getServer().getNumeroAbbServer();
+                abbonato1.getServer().setNumeroAbbServer(numeroAbbserver-1);
+        }
+        else{
+            System.out.println("Utente non trovato");
         }
     }
     public void pulisciRimossi(){
@@ -81,6 +87,12 @@ public class GestioneIptv {
             Abbonato key = entry.getKey();
             Double value = entry.getValue();
             System.out.println(key.getUsername()+" - Debito residuo: "+value);
+        }
+    }
+    public void stampaUtentiRimossi(){
+        for (Abbonato abbonato : abbonatiRimossi) {
+            System.out.println("Username: "+abbonato.getUsername());
+            
         }
     }
 

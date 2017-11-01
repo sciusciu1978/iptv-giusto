@@ -3,68 +3,67 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GestioneIptv { 
-    ArrayList<Abbonato> abbonati= new ArrayList<Abbonato>();
+    ArrayList<Server> server= new ArrayList<Server>();
     ArrayList<Abbonato> abbonatiRimossi= new ArrayList<Abbonato>();
   
     HashMap<Abbonato,Double> debitiCorrenti = new HashMap<Abbonato,Double>();
     
-    public void aggiungiNuovoAbbonato(Server server,double prezzoMensile, String numeroTelefono,String username, String annotazioni,double deditoCorrente){
+    public void aggiungiNuovoAbbonato(String server,double prezzoMensile, String numeroTelefono,String username, String annotazioni){
         //Abbonato abbonato1=null;
-        int contatore=0;
-        for (Abbonato abbonato : abbonati) {
-             
-            if(abbonato.getUsername().equalsIgnoreCase(username)){
-                //abbonato1=abbonato;
-                contatore=1;
-               }
+        Server srv=cercaServer(server);
+        if(srv!=null){
+        srv.aggiungiNuovoAbbonato(prezzoMensile, numeroTelefono, username, annotazioni);
+        }
+        else {
+            System.out.println("Il server non esiste");
+        }
+       
+    }
+    
+    public void aggiungiServer(String nome, String contatto){
+        Server srv = new Server(nome, contatto);
+        server.add(srv);
+    }
+    
+    private Server cercaServer(String nome){
+        Server ret=null;
+        for(Server srv : server){
+            if(srv.getNomeServer().equals(nome)){
+                ret=srv;
             }
-        if(contatore!=1){
-      
-            Abbonato abbonato2= new Abbonato(server,prezzoMensile, numeroTelefono,username, annotazioni,deditoCorrente);
-            abbonati.add(abbonato2);
-            
-              //prezzi.put(abbonato2,new Double(prezzoMensile));
-               debitiCorrenti.put(abbonato2,new Double(deditoCorrente)); 
-               int numeroAbbserver=server.getNumeroAbbServer();//aumenta il numero abbonati del server
-               server.setNumeroAbbServer(numeroAbbserver+1);
         }
-        else{
-            System.out.println("Username gia' registrato");
-        }
+        return ret;
     }
     
     public void rimuoviabbonato(String username){
-        Abbonato abbonato1=null;
-        for (Abbonato abbonato : abbonati) {
-            if (abbonato.getUsername().equalsIgnoreCase(username)) {
-                abbonato1=abbonato;
+        boolean controllo=false;
+        for(Server srv : server){
+            if(srv.rimuoviAbbonato(username)==true){
+                controllo=true;
             }
         }
-        if(abbonato1!=null){
-           abbonati.remove(abbonato1);
-                abbonatiRimossi.add(abbonato1);
-                int numeroAbbserver=abbonato1.getServer().getNumeroAbbServer();
-                abbonato1.getServer().setNumeroAbbServer(numeroAbbserver-1);
-        }
-        else{
-            System.out.println("Utente non trovato");
+        if(controllo!=true){
+            System.out.println("Abbonato non esistente");
         }
     }
     public void pulisciRimossi(){
         abbonatiRimossi.clear();
     }
+    /*
     public void debitoPagare(String username,double mensilita){//ammontare dei debiti mensili
-        Abbonato abbonato1=null;
-        for (Abbonato abbonato : abbonati) {
-            if(abbonato.getUsername().equalsIgnoreCase(username)){
-              double debito=debitiCorrenti.get(abbonato);
-       debitiCorrenti.put(abbonato,new Double(debito+mensilita));
-       abbonato1=abbonato;
-            }
+        Abbonato abb=null;
+        for(Server srv : server){
+            if(abb==null)
+            abb=srv.cercaAbbonato(username);
+            
         }
-        if(abbonato1==null){
+        if(abb==null){
         
             System.out.println("Username non trovato");
+        }
+        else{
+            double debito=abb.getDebitoCorrente()+mensilita;
+            abb.setDebitoCorrente(debito);
         }
        
     }
@@ -77,16 +76,55 @@ public class GestioneIptv {
         }
       
     }
-    public void stampaAbbonati(){
-        for (Abbonato abbonato : abbonati) {
-           System.out.println(abbonato);
+    */
+    
+    public void aggiungiPagamento(String username, double importo){
+        Abbonato abb=null;
+        for(Server srv : server){
+            if(abb==null)
+            abb=srv.cercaAbbonato(username);
+            
+        }
+        if(abb==null){
+            System.out.println("Usernare non esistente");
+        }
+        else{
+            abb.aggiungiPagamento(importo);
+        }
+        
+    }
+    
+    public void stampaAbbonati(){ //tutti gli abbonati, distinti per server
+        for (Server srv : server) {
+            System.out.println(srv.getNomeServer()+":");
+            srv.stampaAbbonati();
         }
     }
     public void stampaDebiti(){
+        /*
         for (Map.Entry<Abbonato, Double> entry : debitiCorrenti.entrySet()) {
             Abbonato key = entry.getKey();
             Double value = entry.getValue();
             System.out.println(key.getUsername()+" - Debito residuo: "+value);
+        }*/
+        for (Server srv : server) {
+            System.out.println(srv.getNomeServer()+":");
+            srv.stampaDebiti();
+        }
+        
+    }
+    public void stampaDebito(String username){
+        Abbonato abb=null;
+        for(Server srv : server){
+            if(abb==null)
+            abb=srv.cercaAbbonato(username);
+            
+        }
+        if(abb==null){
+            System.out.println("Usernare non esistente");
+        }
+        else{
+            System.out.println(abb.debito());
         }
     }
     public void stampaUtentiRimossi(){

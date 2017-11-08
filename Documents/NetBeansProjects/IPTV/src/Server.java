@@ -70,7 +70,9 @@ public class Server {
     
     public void stampaDebiti(){
          for (Abbonato abbonato : abbonati) {
+             if(abbonato.debito()>0){
            System.out.println(abbonato.getUsername()+": "+abbonato.debito());
+             }
         }
     }
 
@@ -88,6 +90,9 @@ public class Server {
 
     public void setContattoSocial(String contattoSocial) {
         this.contattoSocial = contattoSocial;
+    }
+    public void stampaServer(){
+        
     }
     public String toString(){
         return nomeServer+'\n'+"Contatto Social: "+contattoSocial+" - Numero abbonati "+getNumeroAbbServer();

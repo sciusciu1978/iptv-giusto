@@ -8,6 +8,7 @@ public class GestioneIptv {
   
     HashMap<Abbonato,Double> debitiCorrenti = new HashMap<Abbonato,Double>();
     
+    
     public void aggiungiNuovoAbbonato(String server,double prezzoMensile, String numeroTelefono,String username, String annotazioni){
         //Abbonato abbonato1=null;
         Server srv=cercaServer(server);
@@ -28,7 +29,7 @@ public class GestioneIptv {
     private Server cercaServer(String nome){
         Server ret=null;
         for(Server srv : server){
-            if(srv.getNomeServer().equals(nome)){
+            if(srv.getNomeServer().equalsIgnoreCase(nome)){
                 ret=srv;
             }
         }
@@ -96,8 +97,10 @@ public class GestioneIptv {
     
     public void stampaAbbonati(){ //tutti gli abbonati, distinti per server
         for (Server srv : server) {
+            if(srv.getNumeroAbbServer()>0){
             System.out.println(srv.getNomeServer()+":");
             srv.stampaAbbonati();
+            }
         }
     }
     public void stampaDebiti(){
@@ -108,7 +111,7 @@ public class GestioneIptv {
             System.out.println(key.getUsername()+" - Debito residuo: "+value);
         }*/
         for (Server srv : server) {
-            System.out.println(srv.getNomeServer()+":");
+            //System.out.println(srv.getNomeServer()+":");
             srv.stampaDebiti();
         }
         
@@ -127,6 +130,22 @@ public class GestioneIptv {
             System.out.println(abb.debito());
         }
     }
+    
+    public void stampaPagamenti(String username){
+        Abbonato abb=null;
+        for(Server srv : server){ //cerco l'abbonato fra i server
+            if(abb==null)
+                abb=srv.cercaAbbonato(username);
+        }
+        if(abb==null){
+            System.out.println("Usernare non esistente");
+        }
+        else{
+            abb.stampaPagamenti();
+        }
+        
+    }
+    
     public void stampaUtentiRimossi(){
         for (Abbonato abbonato : abbonatiRimossi) {
             System.out.println("Username: "+abbonato.getUsername());

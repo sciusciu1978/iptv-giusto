@@ -1,7 +1,8 @@
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Pagamento {
+public class Pagamento implements Serializable{
     private Date data;
     private double importo;
     

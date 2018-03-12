@@ -1,9 +1,10 @@
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
 
-public class Abbonato { 
+public class Abbonato implements Serializable{ 
     double prezzoMensile;
     String numeroTelefono;
     String username;
